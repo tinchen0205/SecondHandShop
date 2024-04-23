@@ -10,12 +10,14 @@
 
 
 <template>
-  
+  <div class="container">
+    <img class="img-fluid mx-auto d-block w-25" src="/public/bego.png">      
+  </div>
   <headerComp></headerComp>
   
   <nav>
     
-  
+
     <RouterView/>
   </nav>
 </template>
