@@ -4,25 +4,29 @@
 
 <template>
   
-  <div class="p-3  text-white">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        
-
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+  <div class="p-3  text-black">
+    <div class="container ">
+      <div class="row ">
+        <form class="col-3 col-lg-auto mb-3 mb-lg-0 me-lg-3 ">
+          <div class="input-group">
+            <span class="input-group-text"><img src="" ></span> 
+            <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+          </div>
+        </form>
+        <ul class="nav col-6 col-lg-auto justify-content-center mx-auto me-lg-auto mb-2  mb-md-0">
           
-          <RouterLink to="/" class="nav-link px-5 text-black">首頁</RouterLink>
+          <RouterLink to="/" class="nav-link px-3 text-black">首頁</RouterLink>
+          
           <li><a href="#" class="nav-link px-3 text-black">分類</a></li>
           <li><a href="#" class="nav-link px-3 text-black">Blog</a></li>
           <li><a href="#" class="nav-link px-3 text-black">關於</a></li>
+          <li><a href="#" class="nav-link px-3 text-black">聯絡我們</a></li>
+          
+        
         </ul>
 
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-          <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-        </form>
-
-        <div class="text-end">
-          <RouterLink to="/Login" class="btn btn-outline-light me-3">登入</RouterLink>
+        <div class="col-3 text-end">
+          <RouterLink to="/Login" class="btn btn-outline-dark me-3" style="border:none">登入</RouterLink>
           <button type="button" class="btn btn-warning">註冊</button>
         </div>
       </div>
@@ -32,6 +36,15 @@
 
 
 <style scoped>
+
+.nav-link::after {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 18px; /* 调整线的高度 */
+    background-color: black;
+    margin-left: 28px; /* 调整线与文本之间的距离 */
+}
 
 
 </style>
