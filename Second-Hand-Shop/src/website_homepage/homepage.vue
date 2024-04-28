@@ -6,7 +6,7 @@
 
 <template>
    
-  
+   <headerComp></headerComp>
     <mainComp></mainComp>
     <footerComp></footerComp>
 
