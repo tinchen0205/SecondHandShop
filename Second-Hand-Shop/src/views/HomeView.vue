@@ -4,6 +4,6 @@ import homepage from '../website_homepage/homepage.vue'
 
 <template>
   <main>
-    <homepage />
+  <homepage/>
   </main>
 </template>

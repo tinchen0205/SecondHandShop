@@ -26,6 +26,7 @@
         </div>
         <div class="d-flex justify-content-center mb-3">
             <button class="btn btn-sm btn-outline-success col-3 circle" type="submit">登入</button>
+            <div class="mx-1"></div>
             <RouterLink to="/Register" class="btn btn-sm btn-outline-warning col-3 circle">註冊</RouterLink>
         </div>
         <div>
