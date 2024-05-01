@@ -35,7 +35,7 @@ import search from '@/Icons/search.vue';
         
         <div class="col-3 text-end">
           <RouterLink to="/Login" class="btn btn-success me-3">登入</RouterLink>
-          <RouterLink to="/Register" class="btn btn-warning">註冊</RouterLink>
+          <RouterLink to="/register" class="btn btn-warning">註冊</RouterLink>
         </div>
       </div>
     </div>

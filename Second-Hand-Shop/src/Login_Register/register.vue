@@ -1,21 +1,42 @@
 <script>
-    export default {
-        name:'register',
-    }
-    
+import axios from 'axios'; // 导入 axios
+        const base = 'http://localhost:5173/register/'
+        export default {
+        name: 'register',
+        methods: {
+            async register() {
+            const email = document.getElementById('email').value; // 获取输入的 email
+            const password = document.getElementById('password').value; // 获取输入的 password
+            const name = document.getElementById('name').value; // 获取输入的 name
+
+            try {
+                // 发送 POST 请求到后端的 /register 路由，并将用户信息作为请求体的 JSON 数据发送过去
+                await axios.post(base , {
+                email,
+                password,
+                name
+                });
+                alert('User registered successfully');
+                 } catch (error) {
+                    console.error('Error registering user:', error);
+                    alert('Error registering user: ' + error.message);
+                     }
+                }
+            }
+        }
 </script>
 
 <template>
     <body class="text-center">
     
     <main class="form-signin">
-      <form class="login col-6 mx-auto mt-5">
+      <form class="login col-6 mx-auto mt-5"   @submit.prevent = "register">
         
         <h1 class="h3 mb-3 fw-normal">註冊</h1>
         
         <div class="d-flex justify-content-center">
             <div class="form-floating mb-3 col-6">
-            <input type="email" class="form-control" id="Input" placeholder="name@example.com">
+            <input type="email" class="form-control" id="email" placeholder="name@example.com">
             <label for="floatingInput">輸入Email帳號</label>
             </div>
         
@@ -23,7 +44,7 @@
 
         <div class="d-flex justify-content-center">
             <div class="form-floating mb-3 col-6">
-            <input type="password" class="form-control" id="Password" placeholder="Password">
+            <input type="password" class="form-control" id="password" placeholder="Password">
             <label for="floatingInput">輸入密碼</label>
             </div>
         
