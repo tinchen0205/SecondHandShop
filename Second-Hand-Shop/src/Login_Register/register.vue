@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios'; // 导入 axios
-        const base = 'http://localhost:5173/register/'
+
         export default {
         name: 'register',
         methods: {
@@ -11,14 +11,14 @@ import axios from 'axios'; // 导入 axios
 
             try {
                 // 发送 POST 请求到后端的 /register 路由，并将用户信息作为请求体的 JSON 数据发送过去
-                await axios.post(base , {
+                await axios.post('http://localhost:3000/register/' , {   // 這串網址是用放後端伺服器的位子的
                 email,
                 password,
                 name
                 });
-                alert('User registered successfully');
+                alert('User registered successfully'); //成功註冊會顯示這個
                  } catch (error) {
-                    console.error('Error registering user:', error);
+                    console.error('Error registering user:', error);// 失敗是這個
                     alert('Error registering user: ' + error.message);
                      }
                 }
@@ -30,7 +30,7 @@ import axios from 'axios'; // 导入 axios
     <body class="text-center">
     
     <main class="form-signin">
-      <form class="login col-6 mx-auto mt-5"   @submit.prevent = "register">
+      <form class="login col-6 mx-auto mt-5"   @submit.prevent = "register"> <!--這個我問chatgpt 的我忘了幹嘛用的-->
         
         <h1 class="h3 mb-3 fw-normal">註冊</h1>
         
