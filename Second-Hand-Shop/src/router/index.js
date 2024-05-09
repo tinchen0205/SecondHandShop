@@ -20,8 +20,17 @@ const router = createRouter({
       name:'register',
       component:()=>import('../Login_Register/register.vue')
     },
+    {
+      path:'/admin',
+      name: 'admin',
+      component :()=>import('../views/adminView.vue')
+    },
+    {
+      path:'/adminCustomers',
+      name:'adminCustomers',
+      component:()=>import ('../admin/function-pages/customers.vue')
+    }
     
-
   ]
 })
 
