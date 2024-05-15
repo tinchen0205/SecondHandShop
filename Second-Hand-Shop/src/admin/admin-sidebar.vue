@@ -44,10 +44,10 @@ import coustomIcon from '@/Icons/coustom-icon.vue';
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link d-flex align-items-center">
+        <RouterLink to="/adminProducts" class="nav-link d-flex align-items-center" :class="{'active':currentPage==='/adminProducts'}">
           <productIcon class="mx-2"></productIcon>
           Products
-        </a>
+        </RouterLink>
       </li>
       <li>
         <RouterLink to="/adminCustomers" class="nav-link d-flex align-items-center" :class="{'active':currentPage==='/adminCustomers'}">

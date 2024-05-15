@@ -29,6 +29,11 @@ const router = createRouter({
       path:'/adminCustomers',
       name:'adminCustomers',
       component:()=>import ('../admin/function-pages/customers.vue')
+    },
+    {
+      path:'/adminProducts',
+      name:'adminProducts',
+      component :()=>import ('../admin/function-pages/products.vue')
     }
     
   ]
