@@ -6,21 +6,21 @@ import coustomIcon from '@/Icons/coustom-icon.vue';
 </script>
     
 <script>
-//   export default {   這個我還在研究 
-//   data() {
-//     return {
-//       currentRoute: '/admin'
-//     };
-//   },
-//   watch: {
-//     '$route'(to, from) {
-//       this.currentRoute = to.path;
-//     }
-//   },
-//   created() {
-//     this.currentRoute = this.$route.path;
-//   }
-// };
+  export default {   
+  data() {
+    return {
+      currentPage: '/admin'
+    };
+  },
+  watch: {
+    '$route'(to, from) {
+      this.currentPage = to.path;
+    }
+  },
+  created() {
+    this.currentPage = this.$route.path;
+  }
+};
 </script>
 
 <template>
