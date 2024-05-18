@@ -1,38 +1,15 @@
+
 <script setup>
+import { ref, onMounted } from 'vue';
+import { useAuth } from '@/composables/useAuth';
 import search from '@/Icons/search.vue';
 import customer from '@/Icons/coustom-icon.vue';
-</script>
-<script>
-  export default {
-    data (){
-      return{
-        isLogin : false
-      };
-    },
-    methods:{
-      login() {
-      // 假設後端檢查登錄信息的 API 為 /api/checkLogin
-      axios.post('/api/checkLogin', {
-        // 在這裡添加用戶登錄所需的信息，例如用戶名稱和密碼
-        username: 'your_username',
-        password: 'your_password'
-      })
-      .then(response => {
-        // 如果後端返回成功的回應，設置 isLogin 為 true
-        this.isLogin = true;
-      })
-      .catch(error => {
-        // 處理登錄錯誤，例如顯示錯誤提示等
-        console.error('登錄失敗:', error);
-      });
-      }
-      ,
 
-      logout(){
-        this.isLogin =false
-      },
-    }
-  }
+const { isLogin, username, checkLogin, logout } = useAuth();
+
+onMounted(() => {
+  checkLogin();
+});
 </script>
 
 <template>
@@ -67,10 +44,11 @@ import customer from '@/Icons/coustom-icon.vue';
         </ul>
         <div class="col-3 text-end mb-2">
             <span class="me-3"><customer></customer></span>
-            <span class="text-black me-3">沉沉沉</span>
-            <button class="btn btn-danger me-2" v-if="isLogin">登出</button>
-            <RouterLink to="/Login" class="btn btn-success me-3" v-else>登入</RouterLink>
-            <RouterLink to="/register" class="btn btn-warning" >註冊</RouterLink>
+            <span v-if="!isLogin" class="text-black me-3">訪客</span>
+            <span v-if="isLogin" class="text-black me-3">{{username}}</span>
+            <button v-if="isLogin" class="btn btn-danger me-2" @click="logout" >登出</button>
+            <RouterLink v-if="!isLogin" to="/Login" class="btn btn-success me-3" >登入</RouterLink>
+            <RouterLink v-if="!isLogin" to="/register" class="btn btn-warning" >註冊</RouterLink>
         </div>
       </div>
     </div>
