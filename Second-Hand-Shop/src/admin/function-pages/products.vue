@@ -27,7 +27,7 @@ export default {
     methods: {
         async fetchProducts() {
             try {
-                const response = await axios.get('http://localhost:3001/products/');
+                const response = await axios.get('http://localhost:3003/products/');
                 this.products = response.data;
                 console.log(this.products);
             } catch (error) {
@@ -36,7 +36,7 @@ export default {
         },
         async addProduct() {
             try {
-                const response = await axios.post('http://localhost:3000/products/', this.newProduct);
+                const response = await axios.post('http://localhost:3004/products/', this.newProduct);
                 if (response.status === 200 || response.status === 201) {
                     this.fetchProducts();
                     alert('Product added successfully');

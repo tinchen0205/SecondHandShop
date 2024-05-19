@@ -17,7 +17,7 @@
         },
         methods :{
             async fetchUsers(){
-                await axios.get('http://localhost:3000/Customers/')
+                await axios.get('http://localhost:3002/Customers/')
                 .then(respones=>{
                     this.users= respones.data;
                     console.log (this.users);

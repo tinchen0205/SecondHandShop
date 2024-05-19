@@ -11,7 +11,7 @@
 
 <template>
   <div class="container">
-    <!--<img class="img-fluid mx-auto d-block w-25 pt-3" src="/bego.png">    -->  
+   <img class="img-fluid mx-auto d-block w-25 pt-3" src="/bego.png">   
   </div>
   <!--<hr class="col-9 mx-auto">-->
   

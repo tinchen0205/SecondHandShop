@@ -47,6 +47,7 @@ onMounted(() => {
             <span v-if="!isLogin" class="text-black me-3">訪客</span>
             <span v-if="isLogin" class="text-black me-3">{{username}}</span>
             <button v-if="isLogin" class="btn btn-danger me-2" @click="logout" >登出</button>
+            <button v-if="isLogin" class="btn btn-primary me-2">刊登商品</button>
             <RouterLink v-if="!isLogin" to="/Login" class="btn btn-success me-3" >登入</RouterLink>
             <RouterLink v-if="!isLogin" to="/register" class="btn btn-warning" >註冊</RouterLink>
         </div>

@@ -11,7 +11,7 @@ import axios from 'axios'; // 导入 axios
 
             try {
                 // 发送 POST 请求到后端的 /register 路由，并将用户信息作为请求体的 JSON 数据发送过去
-                await axios.post('http://localhost:3000/register/' , {   // 這串網址是用放後端伺服器的位子的
+                await axios.post('http://localhost:3001/register/' , {   // 這串網址是用放後端伺服器的位子的
                 email,
                 password,
                 name
