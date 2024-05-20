@@ -1,16 +1,26 @@
 <script setup>
-const cards = [
-  { text: 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.', time: '9 mins' },
-  { text: 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.', time: '10 mins' },
-  { text: 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.', time: '9 mins' },
-  { text: 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.', time: '9 mins' },
-  // Add more card data as needed
-];
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+ 
+const cards = ref([]);
+
+const fetchCards = async () => {
+  try {
+    const response = await axios.get('http://localhost:3005/products/');
+    cards.value = response.data;
+  } catch (error) {
+    console.error('Error fetching cards:', error);
+  }
+};
+
+onMounted(() => {
+  fetchCards();
+});
 </script>
 
 <template>
 <main>
-<div class="bg-light">
+  <div class="bg-light">
   <section class="py-5 text-center ">
     <div id="slideshow" class="carousel slide">
         <div class="carousel-inner">
@@ -60,53 +70,48 @@ const cards = [
   </section>
 </div>
 
-<div class="album py-5 bg-light">
-      <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          <div v-for="(card, index) in cards" :key="index" class="col">
-            <div class="card shadow-sm">
-              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#55595c"></rect>
-                <text x="50%" y="50%" fill="#eceeef" dy=".3em">照片</text>
-              </svg>
-              <div class="card-body">
-                <p class="card-text">{{ card.text }}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">檢視</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">收藏</button>
-                  </div>
-                  <small class="text-muted">{{ card.time }}</small>
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div v-for="(card, index) in cards" :key="index" class="col">
+          <div class="card shadow-sm">
+            <img :src="card.imgURL" class="bd-placeholder-img card-img-top mt-3" width="100%" height="225" alt="Product Image">
+            <div class="card-body">
+              <h4 class="card-text">{{ card.product_name }}</h4>
+              <p class="card-text">{{ card.description }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">檢視</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">收藏</button>
                 </div>
+                <div class="card-text">
+                    售價:{{card.price}}
+                </div>
+                <small class="text-muted">{{ card.time }}</small>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
+  </div>
 </main>
-
 </template>
 
 <style scoped>
-.carousel-caption{
-    width:100%;
-    position: absolute;
-    bottom:0;
-    left:0;
-    background: linear-gradient(to top,rgba(0,0,0,0.8)0%,rgba(0,0,0,0)100%);
+.carousel-caption {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
 }
-.carousel-indicators button:hover{
-    background-color: orangered;
-    opacity: 1;
+.carousel-indicators button:hover {
+  background-color: orangered;
+  opacity: 1;
 }
-
-.carousel-indicators .active{
-    background-color: orangered;
-    opacity: 1;
+.carousel-indicators .active {
+  background-color: orangered;
+  opacity: 1;
 }
-
-
 </style>
