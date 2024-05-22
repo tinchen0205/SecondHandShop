@@ -101,7 +101,7 @@ export default {
           <td class="p-3">{{ product.price }}</td>
           <td>
             <div class="d-flex justify-content-center">
-              <button class="btn btn-outline-primary btn-sm mx-3">編輯</button>
+              <button class="btn btn-outline-warning btn-sm mx-3">編輯</button>
               <button class="btn btn-outline-danger btn-sm mx-3" @click="deleteProduct(product.product_code)">刪除</button>
             </div>
           </td>
