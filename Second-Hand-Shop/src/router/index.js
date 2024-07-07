@@ -34,6 +34,16 @@ const router = createRouter({
       path:'/adminProducts',
       name:'adminProducts',
       component :()=>import ('../admin/function-pages/products.vue')
+    },
+    {
+      path:'/profile',
+      name:'profile',
+      component :()=>import ('../users/profile.vue')
+    },
+    {
+      path:'/cart',
+      name:'cart',
+      component :()=>import('../users/cart.vue')
     }
     
   ]
