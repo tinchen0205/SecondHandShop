@@ -44,8 +44,37 @@ const router = createRouter({
       path:'/cart',
       name:'cart',
       component :()=>import('../users/cart.vue')
+    },
+    {
+      path:'/keywordsearch',
+      name:'keywordsearch',
+      component :()=>import('../search/keywordsearch.vue')
+    },
+    {
+      path:'/category/:categoryName',
+      name:'Category',
+      component :()=>import('../search/categorypage.vue')
+    },
+    {
+      path:'/aboutus',
+      name:'aboutus',
+      component :()=>import('../pages/aboutus.vue')
+    },
+    {
+      path:'/FAQs',
+      name:'FAQs',
+      component :()=>import('../pages/FAQs.vue')
+    },
+    {
+      path:'/rentalarea',
+      name:'rentalarea',
+      component :()=>import('../RentalArea/rental_homepage.vue')
+    },
+    {
+      path:'/productdetail/:name',
+      name:'ProductDetail',
+      component :()=>import('../productpage/ProductDetail.vue')
     }
-    
   ]
 })
 

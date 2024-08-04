@@ -16,6 +16,9 @@ const fetchCards = async () => {
 onMounted(() => {
   fetchCards();
 });
+const openProductDetail = (name) => {
+  window.open(`/productdetail/${encodeURIComponent(name)}`, '_blank');
+};
 </script>
 
 <template>
@@ -70,22 +73,22 @@ onMounted(() => {
   </section>
 </div>
 
-  <div class="album py-5 bg-light">
+<div class="album py-5 bg-light">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div v-for="(card, index) in cards" :key="index" class="col">
-          <div class="card shadow-sm">
-            <img :src="card.imgURL" class="bd-placeholder-img card-img-top mt-3" width="100%" height="225" alt="Product Image">
+          <div class="card shadow-sm h-100">
+            <img :src="card.imgURL" class="bd-placeholder-img card-img-top mt-3" width="100%" height="225" alt="Product Image" @click="openProductDetail(card.product_name)">
             <div class="card-body">
-              <h4 class="card-text">{{ card.product_name }}</h4>
-              <p class="card-text">{{ card.description }}</p>
-              <div class="d-flex justify-content-between align-items-center">
+              <h4 class="product-name card-text" @click="openProductDetail(card.product_name)">{{ card.product_name }}</h4>
+              <p class="product-description card-text">{{ card.description }}</p>
+              <div class="d-flex justify-content-between align-items-center card-footer">
                 <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-outline-secondary">檢視</button>
                   <button type="button" class="btn btn-sm btn-outline-secondary">收藏</button>
                 </div>
                 <div class="card-text">
-                    售價:{{card.price}}
+                  售價:{{card.price}}
                 </div>
                 <small class="text-muted">{{ card.time }}</small>
               </div>
@@ -114,4 +117,21 @@ onMounted(() => {
   background-color: orangered;
   opacity: 1;
 }
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .product-name {
+    height: 55px; /* 固定名稱高度 */
+    overflow: hidden;
+  }
+  .product-description {
+    height: 60px; /* 固定描述高度 */
+    overflow: hidden;
+  }
+  .card-footer {
+    margin-top: auto;
+  }
 </style>
