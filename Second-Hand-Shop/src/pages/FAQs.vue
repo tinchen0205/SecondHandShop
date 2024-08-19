@@ -63,7 +63,7 @@ export default {
 .faq-item h2 {
   font-size: 24px;
   font-weight: bold;
-  color: rgb(37,76,179);
+  color:#206094;
   text-align: left;
   margin-bottom: 10px;
 }

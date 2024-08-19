@@ -1,7 +1,9 @@
+// login.vue
 <script>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
+import { useStore } from 'vuex';
 
 export default {
   name: 'LoginComponent',
@@ -9,11 +11,14 @@ export default {
     const email = ref('');
     const password = ref('');
     const { login, error } = useAuth();
+    const store = useStore();
     const router = useRouter();
 
     const handleLogin = async () => {
       try {
-        await login(email.value, password.value);
+        const response = await login(email.value, password.value);
+        store.dispatch('setUser', response.id); // 设置 userId 并更新购物车
+        console.log('Dispatched userId to Vuex:', response.id); // 检查是否成功 dispatch
         alert('登入成功');
         router.push('/');
       } catch (err) {
@@ -29,6 +34,7 @@ export default {
   }
 };
 </script>
+
     
 
 <template>

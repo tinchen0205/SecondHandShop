@@ -33,6 +33,9 @@ watch(() => route.params.categoryName, (newCategory) => {
   category.value = newCategory;
   fetchResults(newCategory);
 });
+const openProductDetail = (name) => {
+  window.open(`/productdetail/${encodeURIComponent(name)}`, '_blank');
+};
 </script>
 
 <template>
@@ -47,9 +50,9 @@ watch(() => route.params.categoryName, (newCategory) => {
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
               <div v-for="(result, index) in results" :key="index" class="col">
                 <div class="card shadow-sm h-100">
-                  <img :src="result.imgURL" class="bd-placeholder-img card-img-top mt-3" width="100%" height="225" alt="Product Image">
+                  <img :src="result.imgURL" class="bd-placeholder-img card-img-top mt-3" width="100%" height="225" alt="Product Image" @click="openProductDetail(result.product_name)">
                   <div class="card-body">
-                    <h4 class="product-name card-title">{{ result.product_name }}</h4>
+                    <h4 class="product-name card-title" @click="openProductDetail(result.product_name)">{{ result.product_name }}</h4>
                     <p class="product-description card-text">{{ result.description }}</p>
                     <div class="d-flex justify-content-between align-items-center card-footer">
                       <div class="btn-group">

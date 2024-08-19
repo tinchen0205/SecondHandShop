@@ -6,7 +6,7 @@ import { useAuth } from '@/composables/useAuth';
 import search from '@/Icons/search.vue';
 import customer from '@/Icons/coustom-icon.vue';
 
-const { isLogin, username, checkLogin, logout } = useAuth();
+const { isLogin, username, userId, checkLogin, logout } = useAuth();
 const router = useRouter();
 
 // 定義搜尋關鍵字的狀態
@@ -77,6 +77,7 @@ onMounted(() => {
             <span class="me-3"><customer></customer></span>
             <span v-if="!isLogin" class="text-black me-3">訪客</span>
             <span v-if="isLogin" class="text-black me-3">{{username}}</span>
+            <!--<span v-if="isLogin" class="text-black me-3">{{userId}}</span>-->
             <button v-if="isLogin" class="btn btn-danger me-2" @click="logout" >登出</button>
             <a v-if="isLogin" href="https://forms.gle/CPzF3HRqwfnFhdSWA" target="_blank" class="btn btn-primary me-2">
     刊登商品
