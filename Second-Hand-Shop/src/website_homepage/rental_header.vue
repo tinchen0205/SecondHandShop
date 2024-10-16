@@ -17,10 +17,10 @@ const searchQuery = ref('');
 // 搜尋函數
 const performSearch = async () => {
   try {
-    const response = await axios.get('/keywordsearch', {
+    const response = await axios.get('/rental-keywordsearch', {
       params: { query: searchQuery.value },
     });
-    router.push({ path: '/keywordsearch', query: { q: searchQuery.value, results: JSON.stringify(response.data.results) } });
+    router.push({ path: '/rental-keywordsearch', query: { q: searchQuery.value, results: JSON.stringify(response.data.results) } });
   } catch (error) {
     console.error('搜尋失敗:', error);
   }
@@ -67,19 +67,18 @@ onMounted(() => {
           <li class="nav-item dropdown">
             <a class="nav-link text-black inline" data-bs-toggle="dropdown" href="#">分類</a>
             <ul class="dropdown-menu">
-              <li><router-link class="dropdown-item" :to="{ name: 'Category', params: { categoryName: '3C' }}">3C</router-link></li>
-              <li><router-link class="dropdown-item" :to="{ name: 'Category', params: { categoryName: '家電' }}">家電</router-link></li>
-              <li><router-link class="dropdown-item" :to="{ name: 'Category', params: { categoryName: '生活用品' }}">生活用品</router-link></li>
-              <li><router-link class="dropdown-item" :to="{ name: 'Category', params: { categoryName: '居家' }}">居家</router-link></li>
-              <li><router-link class="dropdown-item" :to="{ name: 'Category', params: { categoryName: '學習用品' }}">學習用品</router-link></li>
-              <li><router-link class="dropdown-item" :to="{ name: 'Category', params: { categoryName: '服飾' }}">服飾</router-link></li>
-              <li><router-link class="dropdown-item" :to="{ name: 'Category', params: { categoryName: '戶外運動' }}">戶外運動</router-link></li>
-              <li><router-link class="dropdown-item" :to="{ name: 'Category', params: { categoryName: '娛樂' }}">娛樂</router-link></li>
+              <li><router-link class="dropdown-item" :to="{ name: 'Rental-Category', params: { categoryName: '3C' }}">3C</router-link></li>
+              <li><router-link class="dropdown-item" :to="{ name: 'Rental-Category', params: { categoryName: '家電' }}">家電</router-link></li>
+              <li><router-link class="dropdown-item" :to="{ name: 'Rental-Category', params: { categoryName: '生活用品' }}">生活用品</router-link></li>
+              <li><router-link class="dropdown-item" :to="{ name: 'Rental-Category', params: { categoryName: '居家' }}">居家</router-link></li>
+              <li><router-link class="dropdown-item" :to="{ name: 'Rental-Category', params: { categoryName: '學習用品' }}">學習用品</router-link></li>
+              <li><router-link class="dropdown-item" :to="{ name: 'Rental-Category', params: { categoryName: '服飾' }}">服飾</router-link></li>
+              <li><router-link class="dropdown-item" :to="{ name: 'Rental-Category', params: { categoryName: '戶外運動' }}">戶外運動</router-link></li>
             </ul>
           </li>
           <li><RouterLink to="/FAQs" class="nav-link px-3 text-black inline">FAQs</RouterLink></li>
           <li><RouterLink to="/aboutus" class="nav-link px-3 text-black inline">關於我們</RouterLink></li>
-          <li><RouterLink to="/rentalarea" class="nav-link px-3 text-black">租借專區</RouterLink></li>
+          <li><RouterLink to="/TradingArea" class="nav-link px-3 text-black">買賣專區</RouterLink></li>
         </ul>
 
         <div class="col-3 text-end mb-2">

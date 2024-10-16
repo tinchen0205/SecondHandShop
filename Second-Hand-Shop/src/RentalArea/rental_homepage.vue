@@ -1,76 +1,131 @@
 <script setup>
-import headerComp from "../website_homepage/header.vue"; 
-</script>
-<template>
-    <headerComp></headerComp>
-    <h1 class="text-center bg-light py-3">租借專區</h1>
-    <div class="container">
-        <!-- Product 1 -->
-        <div class="product-card row">
-            <div class="col-md-2">
-                <img src="https://www.rinnai.com.tw/storage/product/1664863587_RWP-R630V.png" alt="IRIS 自動給水織物清潔機 RNS-P10" class="product-img img-fluid">
-            </div>
-            <div class="col-md-8">
-                <div class="product-title">IRIS 自動給水織物清潔機 RNS-P10</div>
-                <div class="product-brand">IRIS OHYAMA RNS-P10</div>
-                <div class="badge rounded-pill bg-warning text-dark">寵物專用電器用品</div>
-                <div class="product-owner">
-                    <span class="icon">👤</span> winnie Chen
-                </div>
-                <div class="product-details">
-                    <span class="icon">✅</span> 已被租用
-                    <span class="icon">❌</span> 尚未租用
-                </div>
-            </div>
-            <div class="col-md-2 product-actions">
-                <button class="btn btn-outline-info btn-block my-3">瞭解更多</button>
-                <br>
-                <button class="btn btn btn-outline-success btn-block">加入收藏</button>
-            </div>
-        </div>
+import RentalheaderComp from "../website_homepage/rental_header.vue"; 
+import footerComp from "../website_homepage/footer.vue";
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
-        <!-- Product 2 -->
-        <div class="product-card row">
-            <div class="col-md-2">
-                <img src="https://www.electrolux.com.tw/globalassets/appliances/air-purifier/air-purifier-energy-label/ep32-27swa-fr-el-1500x1500.png" alt="空氣淨化器" class="product-img img-fluid">
-            </div>
-            <div class="col-md-8">
-                <div class="product-title">空氣淨化器</div>
-                <div class="product-brand">Electrolux 伊萊克斯 Flow A4 UV</div>
-                <div class="badge rounded-pill bg-warning text-dark">生活家電</div>
-                <div class="product-owner">
-                    <span class="icon">👤</span> 靜靜
-                </div>
-                <div class="product-details">
-                    <span class="icon">✅</span> 已被租用
-                    <span class="icon">❌</span> 尚未租用
-                </div>
-            </div>
-            <div class="col-md-2 product-actions">
-                <button class="btn btn-outline-info btn-block my-3">瞭解更多</button>
-                <br>
-                <button class="btn btn btn-outline-success btn-block">加入收藏</button>
-            </div>
+const rentals = ref([]);
+const fetchRentals = async () => {
+  try {
+    const response = await axios.get('http://localhost:3010/getRentals/');
+    rentals.value = response.data;
+  } catch (error) {
+    console.error('Error fetching rentals:', error);
+  }
+};
+onMounted(() => {
+  fetchRentals();
+});
+
+const openRentalProductDetail = (name) => {
+  window.open(`/rentalproductdetail/${encodeURIComponent(name)}`, '_blank');
+};
+</script>
+
+<template>
+  <RentalheaderComp></RentalheaderComp>
+  <h1 class="text-center  py-3">租借專區</h1>
+  <div class="container">
+    <div class="row">
+      <div v-for="(rental, index) in rentals" :key="index" class="col-12 product-card mb-3 p-3">
+        <div class="d-flex align-items-center"> <!-- 確保用這個 flex 布局 -->
+          <img :src="rental.imgURL" class="product-img" alt="Product Image" @click="openRentalProductDetail(rental.product_name)">
+          <div class="product-info ml-3 flex-grow-1"> <!-- 加入 flex-grow-1 -->
+            <h4 class="product-name" @click="openRentalProductDetail(rental.product_name)">
+              {{ rental.product_name }}
+            </h4>
+            <p class="product-description text-muted">{{ rental.description }}</p>
+            <p class="rental-price">價格：<span>{{ rental.price }} 元 / 七日</span></p>
+          </div>
+          <button class="btn btn-outline-info btn-more-info" @click="openRentalProductDetail(rental.product_name)">瞭解更多</button>
         </div>
+      </div>
     </div>
+  </div>
+  <footerComp></footerComp>
 </template>
-<style>
- .product-card {
-            border: 1.5px solid #5acffe;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            padding: 20px;
-        }
-        .product-title {
-            font-weight: bold;
-        }
-        .product-details {
-            margin-top: 10px;
-        }
-        .product-img {
-            max-width: 100px;
-        }
-        .product-actions {
-            margin-top: 10px;
-        }
+
+<style scoped>
+/* 容器設定 */
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 商品卡片樣式 */
+.product-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+}
+
+/* 商品圖片樣式 */
+.product-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* 商品資訊排版 */
+.product-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.product-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+  cursor: pointer;
+}
+
+.product-description {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.rental-price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #2d6a4f;
+  margin-bottom: 0;
+}
+
+/* 按鈕樣式 */
+.btn-more-info {
+  padding: 8px 20px;
+  font-size: 14px;
+  color: #5acffe;
+  border-color: #5acffe;
+  margin-left: auto; /* 這會使按鈕推向右側 */
+}
+
+.btn-more-info:hover {
+  background-color: #5acffe;
+  color: white;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .product-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .product-img {
+    margin-bottom: 10px;
+  }
+
+  .btn-more-info {
+    width: 100%; /* 按鈕在小螢幕上寬度為100% */
+  }
+}
 </style>

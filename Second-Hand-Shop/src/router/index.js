@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Homeview from '@/views/HomeView.vue';
+import Mainpage from '@/views/mainpage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,6 +8,11 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
+      component: Mainpage,
+    },
+    {
+      path: '/TradingArea',
+      name: 'TradingArea',
       component: Homeview,
     },
     {
@@ -50,9 +56,19 @@ const router = createRouter({
       component: () => import('../search/keywordsearch.vue'),
     },
     {
+      path: '/rental-keywordsearch',
+      name: 'rentalkeywordsearch',
+      component: ()=>import('../search/rental_keywordsearch.vue'),
+    },
+    {
       path: '/category/:categoryName',
       name: 'Category',
       component: () => import('../search/categorypage.vue'),
+    },
+    {
+      path:'/rental-category/:categoryName',
+      name: 'Rental-Category',
+      component: () =>import('../search/rental_categorypage.vue')
     },
     {
       path: '/aboutus',
@@ -75,9 +91,19 @@ const router = createRouter({
       component: () => import('../productpage/ProductDetail.vue'),
     },
     {
+      path: '/rentalproductdetail/:name',
+      name: 'RentalProductDetail',
+      component: () => import('../productpage/RentalProductDetail.vue'),
+    },
+    {
       path: '/checkout',
       name: 'checkout',
       component: () =>import('../users/checkout.vue'),
+    },
+    {
+      path: '/order-confirmation/:orderId',
+      name: 'orderConfirmation',
+      component: () =>import('../users/order-confirmation.vue'),
     }
   ],
   scrollBehavior(to, from, savedPosition) {
