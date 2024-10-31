@@ -5,6 +5,7 @@ import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import headerComp from "../website_homepage/header.vue";
 import footerComp from "../website_homepage/footer.vue";
+import router from '@/router';
 
 const rentalProduct = ref({});
 const route = useRoute();
@@ -12,6 +13,7 @@ const showAlert = ref(false);
 const alertMessage = ref('');
 const store = useStore();
 
+const selectedDays = ref(1); // 選擇的租借天數
 const fetchRentalProductDetail = async (name) => {
   try {
     const response = await axios.get(`http://localhost:3010/getRentals?name=${encodeURIComponent(name)}`);
@@ -25,13 +27,28 @@ const fetchRentalProductDetail = async (name) => {
   }
 };
 
-const rentProduct = () => {
-  store.dispatch('rentProduct', rentalProduct.value);
-  alertMessage.value = `${rentalProduct.value.product_name} 已加入租借列表`;
-  showAlert.value = true;
-  setTimeout(() => {
-    showAlert.value = false;
-  }, 3000);
+const rentProduct = async () => {
+  const success = await store.dispatch('rentProduct', { 
+    ...rentalProduct.value, 
+    days: selectedDays.value 
+  });
+  if (success) {
+    // 如果成功，跳轉到訂單表單頁面
+    router.push({ path: '/rental-order-form' });
+  }
+};
+
+
+const increaseDays = () => {
+  if (selectedDays.value < rentalProduct.value.rental_days) {
+    selectedDays.value += 1;
+  }
+};
+
+const decreaseDays = () => {
+  if (selectedDays.value > 1) {
+    selectedDays.value -= 1;
+  }
 };
 
 onMounted(() => {
@@ -54,8 +71,18 @@ onMounted(() => {
             <h1>{{ rentalProduct.product_name }}</h1>
             <p class="rental-product-description">{{ rentalProduct.description }}</p>
             <p class="rental-product-seller">{{ rentalProduct.seller }}</p>
-            <div class="rental-product-price">NT${{ rentalProduct.price }} / 七日</div>
-            <div class="rental-product-quantity">可租借數量{{ rentalProduct.quantity }}件</div>
+            
+            <div class="rental-product-quantity">可租借數量 : {{ rentalProduct.quantity }} 件</div>
+            <div class="rental-product-days">可租借天數 : {{ rentalProduct.rental_days }} 天</div>
+            <div class="rental-product-status">商品狀態 : {{ rentalProduct.status }}</div>
+            <div class="rental-product-price">NT${{ rentalProduct.price }}/日</div>
+            <!-- 增加減少天數選擇區域，置中並在價格下方 -->
+            <div class="rental-duration">
+              <button @click="decreaseDays" :disabled="selectedDays <= 1">-</button>
+              <span>{{ selectedDays }} 天</span>
+              <button @click="increaseDays" :disabled="selectedDays >= rentalProduct.rental_days">+</button>
+            </div>
+
             <div class="rental-product-actions-container">
                 <button @click="rentProduct">租借</button>
             </div>
@@ -119,6 +146,7 @@ onMounted(() => {
   flex: 1;
   text-align: left;
   position: relative;
+  padding: 20px; /* 增加內部填充 */
 }
 
 .rental-product-info h1 {
@@ -136,19 +164,41 @@ onMounted(() => {
   font-weight: bolder;
   color: #206094;
   text-align: center;
-  margin-bottom: 20px;
-  position: absolute;
-  bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%);
+  margin: 20px 0; /* 增加上下間距 */
+
+}
+
+.rental-duration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* 增加按鈕與天數之間的間距 */
+  font-size: 1.2em;
+  margin: 20px 0; /* 增加上下間距 */
+}
+
+.rental-duration button {
+  width: 30px;
+  height: 30px;
+  font-size: 1em;
+  font-weight: bold;
+  background-color: #206094;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.rental-duration button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
 }
 
 .rental-product-actions-container {
   display: flex;
   width: 100%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  margin-top: 20px; /* 增加與其他元素之間的間距 */
+  justify-content: center; /* 將按鈕置中 */
 }
 
 .rental-product-actions-container button {

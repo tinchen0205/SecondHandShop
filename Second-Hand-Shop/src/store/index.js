@@ -7,6 +7,7 @@ export default createStore({
     userInfo: {}, // 添加用戶資料
     cart: [],
     checkoutCart: [], // 新增状态
+    rentalOrder: null, // 用來存儲租借的商品資訊
   },
   mutations: {
     setUser(state, { userId, userInfo }) {
@@ -17,6 +18,9 @@ export default createStore({
       // 保存用户信息到 localStorage
       localStorage.setItem('userInfo', JSON.stringify(userInfo));
       localStorage.setItem('userId', userId);
+    },
+    setRentalOrder(state, order) {
+      state.rentalOrder = order;
     },
     addToCart(state, product) {
       const existingProduct = state.cart.find(item => item.product_code === product.product_code);
@@ -78,6 +82,16 @@ export default createStore({
         commit('setUser', { userId, userInfo });
       }
     },
+    async rentProduct({ commit }, product) {
+      // 確認商品狀態是否為 "未出租"
+      if (product.status === '未出租') {
+        commit('setRentalOrder', product); // 將商品資訊存入 rentalOrder
+        return true; // 成功租借
+      } else {
+        alert('該商品目前無法租借');
+        return false; // 租借失敗
+      }
+    },
     async addToCart({ commit }, product) {
       try {
         const response = await axios.get(`http://localhost:3008/checkquantity/${product.product_code}`);
@@ -127,5 +141,6 @@ export default createStore({
     cartItemCount: state => state.cart.length,
     checkoutCart: state => state.checkoutCart,
     userInfo: state => state.userInfo, // 添加 getter 以獲取用戶資料
+    rentalOrder: state => state.rentalOrder,
   }
 });

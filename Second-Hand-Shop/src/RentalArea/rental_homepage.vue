@@ -24,18 +24,22 @@ const openRentalProductDetail = (name) => {
 
 <template>
   <RentalheaderComp></RentalheaderComp>
-  <h1 class="text-center  py-3">租借專區</h1>
+  <h1 class="text-center py-3">租借專區</h1>
   <div class="container">
     <div class="row">
       <div v-for="(rental, index) in rentals" :key="index" class="col-12 product-card mb-3 p-3">
-        <div class="d-flex align-items-center"> <!-- 確保用這個 flex 布局 -->
+        <div class="d-flex align-items-center">
           <img :src="rental.imgURL" class="product-img" alt="Product Image" @click="openRentalProductDetail(rental.product_name)">
-          <div class="product-info ml-3 flex-grow-1"> <!-- 加入 flex-grow-1 -->
+          <div class="product-info ml-3 flex-grow-1">
             <h4 class="product-name" @click="openRentalProductDetail(rental.product_name)">
               {{ rental.product_name }}
             </h4>
-            <p class="product-description text-muted">{{ rental.description }}</p>
-            <p class="rental-price">價格：<span>{{ rental.price }} 元 / 七日</span></p>
+
+            <p class="rental-days">可租借日數：{{ rental.rental_days }} 天</p>
+            <p class="rental-price">價格：<span>{{ rental.price }} 元/日</span></p>
+            <p class="rental-status" :class="{ 'status-available': rental.status === '未出租', 'status-rented': rental.status === '已出租' }">
+              商品狀態：{{ rental.status }}
+            </p>
           </div>
           <button class="btn btn-outline-info btn-more-info" @click="openRentalProductDetail(rental.product_name)">瞭解更多</button>
         </div>
@@ -86,17 +90,33 @@ const openRentalProductDetail = (name) => {
   cursor: pointer;
 }
 
-.product-description {
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 10px;
-}
+
 
 .rental-price {
   font-size: 16px;
   font-weight: bold;
   color: #2d6a4f;
   margin-bottom: 0;
+}
+
+.rental-status {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.status-available {
+  color: green;
+}
+
+.status-rented {
+  color: red;
+}
+
+/* 可租借日數樣式 */
+.rental-days {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
 }
 
 /* 按鈕樣式 */

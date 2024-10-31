@@ -101,6 +101,11 @@ const router = createRouter({
       component: () =>import('../users/checkout.vue'),
     },
     {
+      path: '/rental-order-form',
+      name: 'RentalOrderForm',
+      component: () => import('../users/rentalOrderForm.vue'),
+    },    
+    {
       path: '/order-confirmation/:orderId',
       name: 'orderConfirmation',
       component: () =>import('../users/order-confirmation.vue'),
