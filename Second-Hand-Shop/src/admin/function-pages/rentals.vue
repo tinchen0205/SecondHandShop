@@ -8,18 +8,21 @@ import adminSidebar from '@/admin/admin-sidebar.vue';
 import axios from 'axios';
 
 export default {
-  name: 'adminProducts',
+  name: 'adminRentals',
   data() {
     return {
       products: [],
       newProduct: {
         category: '',
         name: '',
-        productCode: '',
+        id: '',
         imageUrl: '',
         description: '',
         price: '',
-        quantity:''
+        quantity:'',
+        status:'',
+        seller:'',
+        rental_days:''
       }
     };
   },
@@ -29,7 +32,7 @@ export default {
   methods: {
     async fetchProducts() {
       try {
-        const response = await axios.get('http://localhost:3003/products/');
+        const response = await axios.get('http://localhost:3011/products/');
         this.products = response.data;
         console.log(this.products);
       } catch (error) {
@@ -38,7 +41,7 @@ export default {
     },
     async addProduct() {
       try {
-        const response = await axios.post('http://localhost:3003/products/', this.newProduct);
+        const response = await axios.post('http://localhost:3011/products/', this.newProduct);
         if (response.status === 200 || response.status === 201) {
           this.fetchProducts();
           alert('Product added successfully');
@@ -52,7 +55,7 @@ export default {
     async deleteProduct(id) {
       if (confirm('Are you sure you want to delete this product?')) {
         try {
-          const response = await axios.delete(`http://localhost:3003/products/${id}`);
+          const response = await axios.delete(`http://localhost:3011/products/${id}`);
           if (response.status === 200) {
             this.fetchProducts();
             alert('Product deleted successfully');
@@ -70,8 +73,7 @@ export default {
         productCode: '',
         imageUrl: '',
         description: '',
-        price: '',
-        quantity:''
+        price: ''
       };
     }
   }
@@ -93,20 +95,20 @@ export default {
           <th class="p-3">分類</th>
           <th class="p-3">商品名稱/編號</th>
           <th class="p-3">價格</th>
-          <th class="p-3">數量</th>
+          <th class="p-3">狀態</th>
           <th class="p-3">編輯</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="product in products" :key="product.id">
           <td class="p-3">{{ product.category }}</td>
-          <td class="p-3">{{ product.product_name }}/{{ product.product_code }}</td>
+          <td class="p-3">{{ product.product_name }}/{{ product.id }}</td>
           <td class="p-3">{{ product.price }}</td>
-          <td class="p-3">{{ product.quantity }}</td>
+          <td class="p-3">{{ product.status }}</td>
           <td>
             <div class="d-flex justify-content-center">
               <button class="btn btn-outline-warning btn-sm mx-3">編輯</button>
-              <button class="btn btn-outline-danger btn-sm mx-3" @click="deleteProduct(product.product_code)">刪除</button>
+              <button class="btn btn-outline-danger btn-sm mx-3" @click="deleteProduct(product.id)">刪除</button>
             </div>
           </td>
         </tr>
@@ -150,6 +152,14 @@ export default {
             <div class="form-floating mb-3">
               <input type="text" class="form-control mb-3" v-model="newProduct.quantity" placeholder="輸入數量">
               <label for="floatingInput">輸入數量</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control mb-3" v-model="newProduct.rental_days" placeholder="輸入租出天數">
+              <label for="floatingInput">輸入出租天數</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control mb-3" v-model="newProduct.seller" placeholder="輸入賣家">
+              <label for="floatingInput">賣家</label>
             </div>
             <button type="submit" class="btn btn-outline-success w-100">送出</button>
           </form>

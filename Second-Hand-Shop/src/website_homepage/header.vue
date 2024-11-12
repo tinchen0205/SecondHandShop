@@ -92,7 +92,7 @@ onMounted(() => {
           </span>
 
           <button v-if="isLogin" class="btn btn-danger me-2" @click="logout">登出</button>
-          <a v-if="isLogin" href="https://forms.gle/CPzF3HRqwfnFhdSWA" target="_blank" class="btn btn-primary me-2">刊登商品</a>
+          <a v-if="isLogin" href="https://docs.google.com/forms/d/e/1FAIpQLSe25JC8Pn6gA8itIImhdrFtn_t71ESq2T8T6a3vqBkdI9ulmA/viewform?usp=sf_link" target="_blank" class="btn btn-primary me-2">刊登商品</a>
 
           <span class="cart-icon-container me-3" @click="gotoCart">
             <i class="cart-icon"><cart /></i>

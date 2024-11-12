@@ -41,6 +41,21 @@ const router = createRouter({
       component: () => import('../admin/function-pages/products.vue'),
     },
     {
+      path: '/adminOrder',
+      name: 'adminOrder',
+      component: () => import('../admin/function-pages/order.vue'),
+    },
+    {
+      path: '/adminRentalOrder',
+      name: 'adminRentalOrder',
+      component: () => import('../admin/function-pages/rentalorder.vue'),
+    },
+    {
+      path: '/adminRentals',
+      name: 'adminRentals',
+      component: () => import('../admin/function-pages/rentals.vue'),
+    },
+    {
       path: '/profile',
       name: 'profile',
       component: () => import('../users/profile.vue'),
@@ -109,6 +124,11 @@ const router = createRouter({
       path: '/order-confirmation/:orderId',
       name: 'orderConfirmation',
       component: () =>import('../users/order-confirmation.vue'),
+    },
+    {
+      path:'/rentalOrder-confirmation/:orderId',
+      name: 'rentalOrderConfirmation',
+      component: () =>import('../users/rentalOrder-confirmation.vue'),
     }
   ],
   scrollBehavior(to, from, savedPosition) {

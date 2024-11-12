@@ -78,14 +78,14 @@ const openProductDetail = (name) => {
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div v-for="(card, index) in cards" :key="index" class="col">
           <div class="card shadow-sm h-100">
-            <img :src="card.imgURL" class="bd-placeholder-img card-img-top mt-3" width="100%" height="225" alt="Product Image" @click="openProductDetail(card.product_name)">
+            <img :src="card.imgURL" class="product-image bd-placeholder-img card-img-top mt-3" width="100%" height="225" alt="Product Image" @click="openProductDetail(card.product_name)">
             <div class="card-body">
               <h4 class="product-name card-text" @click="openProductDetail(card.product_name)">{{ card.product_name }}</h4>
               <p class="product-description card-text">{{ card.description }}</p>
               <div class="d-flex justify-content-between align-items-center card-footer">
                 <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-outline-secondary">檢視</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">收藏</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">加入購物車</button>
                 </div>
                 <div class="card-text">
                   售價:{{card.price}}
@@ -134,4 +134,10 @@ const openProductDetail = (name) => {
   .card-footer {
     margin-top: auto;
   }
+  .product-image {
+    width: 100%;
+  height: 225px;
+  object-fit: contain;
+  border-radius: 8px; /* 可選，圓角效果 */
+}
 </style>

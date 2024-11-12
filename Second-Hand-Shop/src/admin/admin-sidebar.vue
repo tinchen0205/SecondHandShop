@@ -38,38 +38,38 @@ import coustomIcon from '@/Icons/coustom-icon.vue';
         </RouterLink>
       </li>
       <li>
-        <a href="#" class="nav-link d-flex align-items-center">
-          <orderIcon class="mx-2"></orderIcon>
-          Orders
-        </a>
+        <RouterLink to="/adminRentals" class="nav-link d-flex align-items-center" :class="{'active':currentPage==='/adminRentals'}">
+          <productIcon class="mx-2"></productIcon>
+          租借商品專區
+        </RouterLink>
       </li>
       <li>
         <RouterLink to="/adminProducts" class="nav-link d-flex align-items-center" :class="{'active':currentPage==='/adminProducts'}">
           <productIcon class="mx-2"></productIcon>
-          Products
+          購物網頁商品
         </RouterLink>
       </li>
       <li>
         <RouterLink to="/adminCustomers" class="nav-link d-flex align-items-center" :class="{'active':currentPage==='/adminCustomers'}">
           <coustomIcon class="mx-2"></coustomIcon>
-          Customers
+          顧客管理
+        </RouterLink>
+      </li>
+      <li>
+        <RouterLink to="/adminOrder" class="nav-link d-flex align-items-center" :class="{'active':currentPage==='/adminOrder'}">
+          <coustomIcon class="mx-2"></coustomIcon>
+          購物訂單
+        </RouterLink>
+      </li>
+      <li>
+        <RouterLink to="/adminRentalOrder" class="nav-link d-flex align-items-center" :class="{'active':currentPage==='/adminRentalOrder'}">
+          <coustomIcon class="mx-2"></coustomIcon>
+          租借訂單
         </RouterLink>
       </li>
     </ul>
     
-    <div class="dropdown mb-3" style="position: absolute; bottom: 0; width: 100%;">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-        <strong>mdo</strong>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
-        <li><a class="dropdown-item" href="#">New project...</a></li>
-        <li><a class="dropdown-item" href="#">Settings</a></li>
-        <li><a class="dropdown-item" href="#">Profile</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#">Sign out</a></li>
-      </ul>
-    </div>
+
   </div>
 </template>
 

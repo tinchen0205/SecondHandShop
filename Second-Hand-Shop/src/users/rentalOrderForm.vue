@@ -141,29 +141,25 @@ const submitForm = async () => {
     console.log('Form Data:', form.value);
 
     try {
-      const response = await axios.post('http://localhost:3009/submit-order', {
+      const response = await axios.post('http://localhost:3010/submit-rentalorder', {
         user: form.value.user,
         delivery: form.value.delivery,
-        rentalItems: rentalOrder.value,
+        rentalItem: rentalOrder.value, // 修改為單一物件
         totalAmount: rentalOrderTotal.value,
         message: form.value.message
       });
 
       const orderId = response.data.orderId;  // 获取返回的订单 ID
-
-      // 重置表單與購物車
-      store.commit('setCheckoutCart', []);
-      const cartStorageKey = `shoppingCart_${store.state.userId}`;
-      localStorage.removeItem(cartStorageKey);
       resetForm(); 
       
       // 跳轉到訂單確認頁面，並將 orderId 傳遞過去
-      router.push(`/order-confirmation/${orderId}`);
+      router.push(`/rentalOrder-confirmation/${orderId}`);
     } catch (error) {
       console.error('提交訂單失敗', error);
     }
   }
 };
+
 
 onMounted(() => {
   console.log("User ID in store:", store.state.userId);
