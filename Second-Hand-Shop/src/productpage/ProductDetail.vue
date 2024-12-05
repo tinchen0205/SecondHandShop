@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
+import { useAuth } from '@/composables/useAuth';
 import headerComp from "../website_homepage/header.vue";
 import footerComp from "../website_homepage/footer.vue";
 
@@ -11,7 +12,7 @@ const route = useRoute();
 const showAlert = ref(false);
 const alertMessage = ref('');
 const store = useStore();
-
+const {  isLogin, checkLogin } = useAuth();
 const fetchProductDetail = async (name) => {
   try {
     const response = await axios.get(`http://localhost:3005/products?name=${encodeURIComponent(name)}`);
@@ -26,12 +27,17 @@ const fetchProductDetail = async (name) => {
 };
 
 const AddToCart = () => {
-  store.dispatch('addToCart', product.value);
-  alertMessage.value = `${product.value.product_name} 已加入購物車`;
-  showAlert.value = true;
-  setTimeout(() => {
-    showAlert.value = false;
-  }, 3000);
+  if(isLogin.value){
+    store.dispatch('addToCart', product.value);
+    alertMessage.value = `${product.value.product_name} 已加入購物車`;
+    showAlert.value = true;
+    setTimeout(() => {
+      showAlert.value = false;
+    }, 3000);
+  }
+  else{
+    alert('尚未登入，請先登入再進行購買');
+  }
 };
 
 const buyNow = () => {
@@ -41,6 +47,7 @@ const buyNow = () => {
 onMounted(() => {
   const productName = route.params.name;
   fetchProductDetail(productName);
+  checkLogin();
 });
 </script>
 

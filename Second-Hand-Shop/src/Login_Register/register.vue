@@ -1,29 +1,34 @@
 <script>
 import axios from 'axios'; // 导入 axios
+export default {
+  name: 'register',
+  data() {
+    return {
+      isSubmitting: false, // 防重複提交的標誌位
+    };
+  },
+  methods: {
+    async register() {
+      if (this.isSubmitting) return; // 如果正在提交，直接返回
+      this.isSubmitting = true; // 設置為提交中
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const name = document.getElementById('name').value;
 
-        export default {
-        name: 'register',
-        methods: {
-            async register() {
-            const email = document.getElementById('email').value; // 获取输入的 email
-            const password = document.getElementById('password').value; // 获取输入的 password
-            const name = document.getElementById('name').value; // 获取输入的 name
+      try {
+        await axios.post('http://localhost:3001/register/', { email, password, name });
+        alert('User registered successfully');
+      } catch (error) {
+        console.error('Error registering user:', error);
+        alert('Error registering user: ' + error.message);
+      } finally {
+        this.isSubmitting = false; // 請求結束後解除提交鎖定
+      }
+    }
+  }
+}
 
-            try {
-                // 发送 POST 请求到后端的 /register 路由，并将用户信息作为请求体的 JSON 数据发送过去
-                await axios.post('http://localhost:3001/register/' , {   // 這串網址是用放後端伺服器的位子的
-                email,
-                password,
-                name
-                });
-                alert('User registered successfully'); //成功註冊會顯示這個
-                 } catch (error) {
-                    console.error('Error registering user:', error);// 失敗是這個
-                    alert('Error registering user: ' + error.message);
-                     }
-                }
-            }
-        }
 </script>
 
 <template>

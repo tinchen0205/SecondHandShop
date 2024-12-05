@@ -6,7 +6,9 @@ import { useStore } from 'vuex';
 import headerComp from "../website_homepage/header.vue";
 import footerComp from "../website_homepage/footer.vue";
 import router from '@/router';
+import { useAuth } from '@/composables/useAuth';
 
+const {  isLogin, checkLogin } = useAuth();
 const rentalProduct = ref({});
 const route = useRoute();
 const showAlert = ref(false);
@@ -28,13 +30,18 @@ const fetchRentalProductDetail = async (name) => {
 };
 
 const rentProduct = async () => {
-  const success = await store.dispatch('rentProduct', { 
+  if(isLogin.value){
+     const success = await store.dispatch('rentProduct', { 
     ...rentalProduct.value, 
     days: selectedDays.value 
   });
   if (success) {
     // 如果成功，跳轉到訂單表單頁面
     router.push({ path: '/rental-order-form' });
+  }
+  }
+  else{
+    alert('尚未登入，請先登入再進行租借')
   }
 };
 
@@ -54,6 +61,7 @@ const decreaseDays = () => {
 onMounted(() => {
   const productName = route.params.name;
   fetchRentalProductDetail(productName);
+  checkLogin();
 });
 </script>
 
