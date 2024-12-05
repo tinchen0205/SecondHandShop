@@ -1,9 +1,37 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
- 
-const cards = ref([]);
+import { useAuth } from '@/composables/useAuth';
+import NotificationModal from '@/composables/NotificationModal.vue'; // 根據您的目錄結構調整
 
+
+const { isLogin, checkLogin } = useAuth();
+const cards = ref([]); // 商品列表
+const rentalOrders = ref([]); // 用戶的租借訂單
+const overdueItems = ref([]); // 需要通知的商品列表
+
+// 拉取租借訂單
+const fetchRentalOrders = async () => {
+  try {
+    const userId = localStorage.getItem('userId');
+    const response = await axios.get(`http://localhost:3010/rentalOrdersInform/${userId}`);
+    console.log('Rental Orders Response:', response.data);
+    
+    rentalOrders.value = response.data.orders; // 已經是篩選過的資料
+
+    // 直接將符合條件的商品放入 overdueItems
+    overdueItems.value = rentalOrders.value.flatMap(order => order.items);
+    console.log('Overdue Items:', overdueItems.value);  // 檢查 overdueItems 是否正確更新
+
+  } catch (error) {
+    console.error('Error fetching rental orders:', error);
+  }
+};
+
+
+
+
+// 拉取商品資料
 const fetchCards = async () => {
   try {
     const response = await axios.get('http://localhost:3005/products/');
@@ -13,13 +41,23 @@ const fetchCards = async () => {
   }
 };
 
-onMounted(() => {
-  fetchCards();
-});
+// 開啟商品詳細頁
 const openProductDetail = (name) => {
   window.open(`/productdetail/${encodeURIComponent(name)}`, '_blank');
 };
+
+// 初始化
+onMounted(() => {
+  fetchCards(); // 拉取商品資料
+  checkLogin(); // 檢查登入狀態
+
+  if (isLogin.value) {
+    fetchRentalOrders(); // 如果已登入，拉取租借訂單
+  }
+});
 </script>
+
+
 
 <template>
 <main>
@@ -73,6 +111,12 @@ const openProductDetail = (name) => {
   </section>
 </div>
 
+
+ <!-- 顯示通知 Modal -->
+ <NotificationModal
+      v-if="overdueItems.length > 0"
+      :itemsToNotify="overdueItems"
+    />
 <div class="album py-5 bg-light">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

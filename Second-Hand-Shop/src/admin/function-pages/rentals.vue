@@ -22,8 +22,11 @@ export default {
         quantity:'',
         status:'',
         seller:'',
+        return_datetime:'',
         rental_days:''
-      }
+      },
+      categories: ['3C', '家電', '生活用品', '居家', '學習用品','服飾','戶外運動','娛樂'],
+      Status:['已出租','未出租']
     };
   },
   created() {
@@ -66,6 +69,43 @@ export default {
         }
       }
     },
+    async editProduct(id) {
+  try {
+    // 發送 GET 請求以獲取特定商品的詳細資料
+        const response = await axios.get(`http://localhost:3011/products/${id}`);
+        
+        // 將返回的資料賦值給 newProduct
+        this.newProduct = { ...response.data }; // 假設 response.data 是完整的商品資料
+        
+        // 如果你有其他需要處理的邏輯，可以在這裡添加
+      } catch (error) {
+        console.error("There was an error fetching the product details!", error);
+      }
+    },
+    async updateProduct(id) {
+      try {
+        const updatedProduct = { 
+          category: this.newProduct.category || null,
+          name: this.newProduct.product_name || null,
+          productCode: this.newProduct.productCode || null,
+          imageUrl: this.newProduct.imgURL || null,
+          description: this.newProduct.description || null,
+          price: this.newProduct.price || null,
+          quantity: this.newProduct.quantity || null,
+          return_datetime:this.newProduct.return_datetime || null,
+          status: this.newProduct.status || null
+        };
+        const response = await axios.put(`http://localhost:3011/products/${id}`,updatedProduct);
+        if (response.status === 200) {
+          this.fetchProducts();
+          alert('Product updated successfully');
+          this.resetForm();
+        }
+      } catch (error) {
+        console.error("There was an error updating the product!", error);
+        alert('Error updating product');
+      }
+    },
     resetForm() {
       this.newProduct = {
         category: '',
@@ -95,7 +135,7 @@ export default {
           <th class="p-3">分類</th>
           <th class="p-3">商品名稱/編號</th>
           <th class="p-3">價格</th>
-          <th class="p-3">狀態</th>
+          <th class="p-3">狀態/歸還日期</th>
           <th class="p-3">編輯</th>
         </tr>
       </thead>
@@ -104,10 +144,10 @@ export default {
           <td class="p-3">{{ product.category }}</td>
           <td class="p-3">{{ product.product_name }}/{{ product.id }}</td>
           <td class="p-3">{{ product.price }}</td>
-          <td class="p-3">{{ product.status }}</td>
+          <td class="p-3">{{ product.status }}/{{ product.return_datetime}}</td>
           <td>
             <div class="d-flex justify-content-center">
-              <button class="btn btn-outline-warning btn-sm mx-3">編輯</button>
+              <button class="btn btn-outline-warning btn-sm mx-3" data-bs-toggle="modal" data-bs-target="#edit-modal" @click="editProduct(product.id)">編輯</button>
               <button class="btn btn-outline-danger btn-sm mx-3" @click="deleteProduct(product.id)">刪除</button>
             </div>
           </td>
@@ -130,9 +170,14 @@ export default {
         <div class="modal-body">
           <form @submit.prevent="addProduct">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control mb-3" v-model="newProduct.category" placeholder="輸入分類項目">
-              <label for="floatingInput">輸入分類項目</label>
-            </div>
+            <select class="form-select" v-model="newProduct.category">
+              <option disabled value="">請選擇分類項目</option>
+              <option v-for="category in categories" :key="category" :value="category">
+                {{ category }}
+              </option>
+            </select>
+            <label for="floatingSelect">選擇分類項目</label>
+          </div>
             <div class="form-floating mb-3">
               <input type="text" class="form-control mb-3" v-model="newProduct.name" placeholder="輸入商品名稱">
               <label for="floatingInput">輸入商品名稱</label>
@@ -167,6 +212,68 @@ export default {
       </div>
     </div>
   </div>
+
+  <div id="edit-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Header -->
+      <div class="modal-header">
+        <div class="modal-container text-center">
+          <h3><i class="bi bi-person-circle me-1"></i>編輯商品</h3>
+        </div>
+        <button class="btn-close" type="button" data-bs-dismiss="modal"></button>
+      </div>
+      <!-- Body -->
+      <div class="modal-body">
+        <form @submit.prevent="updateProduct(newProduct.id)">
+          <div class="form-floating mb-3">
+            <select class="form-select" v-model="newProduct.category">
+              <option disabled value="">請選擇分類項目</option>
+              <option v-for="category in categories" :key="category" :value="category">
+                {{ category }}
+              </option>
+            </select>
+            <label for="floatingSelect">選擇分類項目</label>
+          </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control mb-3" v-model="newProduct.product_name" placeholder="輸入商品名稱">
+              <label for="floatingInput">輸入商品名稱</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control mb-3" v-model="newProduct.imgURL" placeholder="輸入圖片網址">
+              <label for="floatingInput">輸入圖片網址</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control mb-3" v-model="newProduct.description" placeholder="輸入產品描述">
+              <label for="floatingInput">輸入產品描述</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control mb-3" v-model="newProduct.price" placeholder="輸入價格">
+              <label for="floatingInput">輸入價格</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control mb-3" v-model="newProduct.quantity" placeholder="輸入數量">
+              <label for="floatingInput">輸入數量</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control mb-3" v-model="newProduct.return_datetime" placeholder="輸入日期(yyyy-mm-dd)">
+              <label for="floatingInput">輸入歸還日期</label>
+            </div>
+            <div class="form-floating mb-3">
+            <select class="form-select" v-model="newProduct.status">
+              <option disabled value="">請選擇狀態</option>
+              <option v-for="status in Status" :key="status" :value="status">
+                {{ status }}
+              </option>
+            </select>
+            <label for="floatingSelect">選擇分類項目</label>
+          </div>
+            <button type="submit" class="btn btn-outline-success w-100">送出</button>
+          </form>
+        </div>
+    </div>
+  </div>
+</div>
 </template>
 
 <style>

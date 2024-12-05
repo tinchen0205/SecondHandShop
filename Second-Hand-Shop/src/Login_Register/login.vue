@@ -41,6 +41,7 @@ export default {
 };
 </script>
 
+
 <template>
   <div class="text-center">
     <main class="form-signin">
