@@ -50,15 +50,11 @@ const openProductDetail = (name) => {
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
               <div v-for="(result, index) in results" :key="index" class="col">
                 <div class="card shadow-sm h-100">
-                  <img :src="result.imgURL" class="bd-placeholder-img card-img-top mt-3" width="100%" height="225" alt="Product Image" @click="openProductDetail(result.product_name)">
+                  <img :src="result.imgURL" class="product-image bd-placeholder-img card-img-top mt-3 " width="100%" height="225" alt="Product Image" @click="openProductDetail(result.product_name)">
                   <div class="card-body">
                     <h4 class="product-name card-title" @click="openProductDetail(result.product_name)">{{ result.product_name }}</h4>
                     <p class="product-description card-text">{{ result.description }}</p>
                     <div class="d-flex justify-content-between align-items-center card-footer">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">檢視</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">收藏</button>
-                      </div>
                       <div class="card-text">
                         售價: {{ result.price }}
                       </div>
@@ -106,5 +102,11 @@ const openProductDetail = (name) => {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+}
+.product-image {
+    width: 100%;
+  height: 225px;
+  object-fit: contain;
+  border-radius: 8px; /* 可選，圓角效果 */
 }
 </style>

@@ -63,7 +63,7 @@ onMounted(() => {
         </form>
 
         <ul class="nav col-6 col-lg-auto justify-content-center mx-auto me-lg-auto mb-2 mb-md-0">
-          <li><RouterLink to="/" class="nav-link px-3 text-black inline">首頁</RouterLink></li>
+          <li><RouterLink to="/rentalarea" class="nav-link px-3 text-black inline">首頁</RouterLink></li>
           <li class="nav-item dropdown">
             <a class="nav-link text-black inline" data-bs-toggle="dropdown" href="#">分類</a>
             <ul class="dropdown-menu">

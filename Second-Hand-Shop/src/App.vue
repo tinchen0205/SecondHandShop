@@ -10,9 +10,17 @@
 
 
 <template>
-  <div class="container">
-   <img class="img-fluid mx-auto d-block w-25 pt-3" src="/2ndFind.jpg">   
-  </div>
+<div class="container">
+  <a href="/" title="回到首頁">
+    <img 
+      class="img-fluid mx-auto d-block w-25 pt-3" 
+      src="/2ndFind.jpg" 
+      alt="回到首頁"
+      style="object-fit: cover; width:100%; height: 200px"
+    >
+  </a>
+</div>
+
   <!--<hr class="col-9 mx-auto">-->
   
   

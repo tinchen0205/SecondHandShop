@@ -1,8 +1,11 @@
 <script setup>
 import homeIcon from '@/Icons/home-icon.vue'
 import orderIcon from '@/Icons/order-icon.vue';
-import productIcon from '@/Icons/product-icon.vue';
+import rentIcon from '@/Icons/product-icon.vue';
 import coustomIcon from '@/Icons/coustom-icon.vue';
+import productIcon from '@/Icons/product-fill.vue';
+import rentalorderIcon from '@/Icons/rentalorder-icon.vue';
+import tradeorderIcon from '@/Icons/tradeorder-icon.vue';
 </script>
     
 <script>
@@ -39,14 +42,14 @@ import coustomIcon from '@/Icons/coustom-icon.vue';
       </li>
       <li>
         <RouterLink to="/adminRentals" class="nav-link d-flex align-items-center" :class="{'active':currentPage==='/adminRentals'}">
-          <productIcon class="mx-2"></productIcon>
+          <rentIcon class="mx-2"></rentIcon>
           租借商品專區
         </RouterLink>
       </li>
       <li>
         <RouterLink to="/adminProducts" class="nav-link d-flex align-items-center" :class="{'active':currentPage==='/adminProducts'}">
           <productIcon class="mx-2"></productIcon>
-          購物網頁商品
+          購物商品專區
         </RouterLink>
       </li>
       <li>
@@ -57,13 +60,13 @@ import coustomIcon from '@/Icons/coustom-icon.vue';
       </li>
       <li>
         <RouterLink to="/adminOrder" class="nav-link d-flex align-items-center" :class="{'active':currentPage==='/adminOrder'}">
-          <coustomIcon class="mx-2"></coustomIcon>
+          <tradeorderIcon class="mx-2"></tradeorderIcon>
           購物訂單
         </RouterLink>
       </li>
       <li>
         <RouterLink to="/adminRentalOrder" class="nav-link d-flex align-items-center" :class="{'active':currentPage==='/adminRentalOrder'}">
-          <coustomIcon class="mx-2"></coustomIcon>
+          <rentalorderIcon class="mx-2"></rentalorderIcon>
           租借訂單
         </RouterLink>
       </li>

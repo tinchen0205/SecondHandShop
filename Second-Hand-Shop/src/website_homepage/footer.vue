@@ -11,7 +11,7 @@ import arrowUp from '@/Icons/arrow-up.vue';
         <li><RouterLink to="/aboutus" class="nav-link px-2 text-body-secondary">About</RouterLink></li>
         <li><RouterLink to="/rentalarea" class="nav-link px-2 text-body-secondary">RentalArea</RouterLink></li>
       </ul>
-      <p class="text-center text-body-secondary">© 2024 Company, Inc</p>
+      <p class="text-center text-body-secondary">©2ndFind</p>
     </footer>
     
     <!-- 返回頂部箭頭 -->

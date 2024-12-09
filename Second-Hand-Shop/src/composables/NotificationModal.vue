@@ -1,19 +1,31 @@
-
 <template>
   <div v-if="visible" class="modal" @click.self="closeModal">
     <div class="modal-content">
       <h3>租借提醒</h3>
-      <ul>
-        <li v-for="item in itemsToNotify" :key="item.productId">
-          商品名稱：{{ item.product_name }}，歸還日：{{ formatDate(item.return_datetime) }}
-        </li>
-      </ul>
+      <table class="notification-table">
+        <thead>
+          <tr>
+            <th>商品圖片</th>
+            <th>商品名稱</th>
+            <th>租借天數</th>
+            <th>起始日期</th>
+            <th>歸還日期</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in itemsToNotify" :key="item.productId">
+            <td><img :src="item.imgURL" alt="商品圖片" class="product-img"></td>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.days }}</td>
+            <td>{{ formatDate(item.delivery_datetime) }}</td>
+            <td class="return-date">{{ formatDate(item.return_datetime) }}</td>
+          </tr>
+        </tbody>
+      </table>
       <button @click="closeModal" class="close-btn">確定</button>
     </div>
   </div>
 </template>
-
-
 
 <script>
 export default {
@@ -33,12 +45,11 @@ export default {
     closeModal() {
       this.visible = false;
     },
-    
     // 格式化時間
     formatDate(dateString) {
       const date = new Date(dateString);
       const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份從 0 開始，所以要加 1
+      const month = String(date.getMonth() + 1).padStart(2, '0');
       const day = String(date.getDate()).padStart(2, '0');
       const hours = String(date.getHours()).padStart(2, '0');
       const minutes = String(date.getMinutes()).padStart(2, '0');
@@ -46,7 +57,6 @@ export default {
     },
   },
 };
-
 </script>
 
 <style scoped>
@@ -57,51 +67,68 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 遮罩半透明 */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* 保證在最上層 */
+  z-index: 1000;
 }
 
 /* Modal 內容框 */
 .modal-content {
   background-color: white;
-  padding: 20px;
+  padding: 30px;
   border-radius: 10px;
-  width: 80%;
-  max-width: 400px;
+  width: 100%;
+  max-width: 800px; /* 增加寬度 */
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* 顯示商品名稱及歸還日期 */
-.modal-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* 表格樣式 */
+.notification-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0; /* 增加上下間距 */
+  font-size: 15px; /* 調整字體大小 */
 }
 
-.modal-content li {
-  margin: 10px 0;
-  font-size: 16px;
-  line-height: 1.5;
+.notification-table th,
+.notification-table td {
+  border: 1px solid #ddd;
+  padding: 12px; /* 增加內邊距 */
+  text-align: center;
+}
+
+.notification-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.product-img {
+  max-width: 50px; /* 調整圖片大小 */
+  height: auto;
+  border-radius: 5px;
+}
+
+.return-date {
+  color: red;
+  font-weight: bold;
 }
 
 /* 關閉按鈕 */
 .close-btn {
   margin-top: 20px;
-  padding: 10px 20px;
+  padding: 12px 24px; /* 增大按鈕尺寸 */
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px; /* 增加字體大小 */
 }
 
 .close-btn:hover {
   background-color: #0056b3;
 }
 </style>
-

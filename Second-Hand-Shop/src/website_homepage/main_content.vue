@@ -75,7 +75,7 @@ onMounted(() => {
             </div>
                 <!--P2-->
             <div class="carousel-item">
-                <img class="slide-image w-100" src="/pic2.jpg" alt="slide2">
+                <img class="slide-image w-100" src="/pu68.jpg" alt="slide2">
                 <div class="carousel-caption">
                     <h3></h3>
                     
@@ -127,10 +127,7 @@ onMounted(() => {
               <h4 class="product-name card-text" @click="openProductDetail(card.product_name)">{{ card.product_name }}</h4>
               <p class="product-description card-text">{{ card.description }}</p>
               <div class="d-flex justify-content-between align-items-center card-footer">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">檢視</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">加入購物車</button>
-                </div>
+                
                 <div class="card-text">
                   售價:{{card.price}}
                 </div>

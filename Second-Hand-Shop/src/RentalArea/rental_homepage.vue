@@ -3,8 +3,14 @@ import RentalheaderComp from "../website_homepage/rental_header.vue";
 import footerComp from "../website_homepage/footer.vue";
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { useAuth } from '@/composables/useAuth';
+import NotificationModal from '@/composables/NotificationModal.vue'; // 根據您的目錄結構調整
 
+const { isLogin, checkLogin } = useAuth();
 const rentals = ref([]);
+const rentalOrders = ref([]); // 用戶的租借訂單
+const overdueItems = ref([]); // 需要通知的商品列表
+
 const fetchRentals = async () => {
   try {
     const response = await axios.get('http://localhost:3010/getRentals/');
@@ -13,8 +19,32 @@ const fetchRentals = async () => {
     console.error('Error fetching rentals:', error);
   }
 };
+
+
+// 拉取租借訂單
+const fetchRentalOrders = async () => {
+  try {
+    const userId = localStorage.getItem('userId');
+    const response = await axios.get(`http://localhost:3010/rentalOrdersInform/${userId}`);
+    console.log('Rental Orders Response:', response.data);
+    
+    rentalOrders.value = response.data.orders; // 已經是篩選過的資料
+
+    // 直接將符合條件的商品放入 overdueItems
+    overdueItems.value = rentalOrders.value.flatMap(order => order.items);
+    console.log('Overdue Items:', overdueItems.value);  // 檢查 overdueItems 是否正確更新
+
+  } catch (error) {
+    console.error('Error fetching rental orders:', error);
+  }
+};
+
 onMounted(() => {
   fetchRentals();
+  checkLogin();
+  if(isLogin.value){
+    fetchRentalOrders();
+  }
 });
 
 const openRentalProductDetail = (name) => {
@@ -24,6 +54,11 @@ const openRentalProductDetail = (name) => {
 
 <template>
   <RentalheaderComp></RentalheaderComp>
+   <!-- 顯示通知 Modal -->
+ <NotificationModal
+      v-if="overdueItems.length > 0"
+      :itemsToNotify="overdueItems"
+    />
   <h1 class="text-center py-3">租借專區</h1>
   <div class="container">
     <div class="row">

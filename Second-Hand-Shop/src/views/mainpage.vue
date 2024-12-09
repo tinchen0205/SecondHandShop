@@ -7,10 +7,9 @@ export default {
   }
 }
 </script>
-
 <template>
   <div class="homepage">
-    <h1>靜宜二手物交易網</h1>
+    <h1 class="slogan" >Give it a second life, find it at SecondFind.</h1>
     <div class="pathways">
       <router-link to="/TradingArea" class="pathway">
         <div class="card">
@@ -29,8 +28,6 @@ export default {
   <footerComp></footerComp>
 </template>
 
-
-
 <style scoped>
 /* 背景和頁面設計 */
 .homepage {
@@ -38,15 +35,18 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 50px;
-  background-color: white; /* 柔和的背景顏色 */
+  background-color: white;
   min-height: 100vh;
 }
 
-h1 {
+/* 標語設計 */
+.slogan {
   color: #2c3e50;
-  font-size: 3rem;
+  font-size: 2rem;
   margin-bottom: 60px;
-  font-family: 'Arial', sans-serif;
+  font-family:'Lucida Sans', sans-serif;/* 添加手寫風格字體 */
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* 添加輕微陰影效果 */
 }
 
 /* 路徑區塊佈局 */
@@ -63,39 +63,37 @@ h1 {
 
 /* 卡片樣式設計 */
 .card {
-  background-color: #007799 ;
-  border: none; 
+  background-color: #007799;
   border-radius: 20px;
   padding: 40px;
-  width: 350px; /* 增加卡片寬度 */
-  height: 350px; /* 增加卡片高度 */
+  width: 350px;
+  height: 350px;
   text-align: center;
   box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 
-  /* Flexbox 居中佈局 */
   display: flex;
   flex-direction: column;
-  justify-content: center; /* 垂直居中 */
-  align-items: center; /* 水平居中 */
+  justify-content: center;
+  align-items: center;
 }
 
 .card:hover {
   transform: translateY(-12px);
-  box-shadow: 0 18px 28px rgba(0, 0, 0, 0.2); /* 強化滑過時的陰影效果 */
+  box-shadow: 0 18px 28px rgba(0, 0, 0, 0.2);
 }
 
 /* 標題與描述 */
 h2 {
   color: #fff;
-  font-size: 1.8rem; /* 增加標題字體大小 */
+  font-size: 1.8rem;
   margin-bottom: 15px;
   font-family: 'Arial', sans-serif;
 }
 
 p {
   color: #f9f9f9;
-  font-size: 1.2rem; /* 增加描述字體大小 */
+  font-size: 1.2rem;
   font-family: 'Arial', sans-serif;
 }
 
@@ -103,9 +101,9 @@ p {
 @media (max-width: 768px) {
   .pathways {
     flex-direction: column;
-    gap: 30px; /* 增加間距 */
+    gap: 30px;
   }
-  
+
   .card {
     width: 90%;
     height: 220px;
